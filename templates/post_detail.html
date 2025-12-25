@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ article.title }} — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ====== ОБЩИЕ ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #eee;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: #eee;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #999;
+        }
+
+        /* ====== ШАПКА ====== */
+        header {
+            background-color: #000;
+            border-bottom: 1px solid #222;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            margin-left: 25px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        /* ====== КОНТЕНТ ====== */
+        .article {
+            max-width: 800px;
+            margin: 60px auto 80px;
+            padding: 0 20px;
+        }
+
+        .article h1 {
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .article-date {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 40px;
+        }
+
+        .article-text {
+            font-size: 16px;
+            color: #ccc;
+            white-space: pre-line;
+        }
+
+        /* ====== НАВИГАЦИЯ ====== */
+        .back-link {
+            display: inline-block;
+            margin-top: 50px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 2px;
+        }
+
+        .back-link:hover {
+            border-color: #999;
+        }
+
+        /* ====== ACTION BUTTONS ====== */
+.article-actions {
+    margin-top: 50px;
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #555;
+    transition: all 0.2s ease;
+}
+
+.btn-edit {
+    border-color: #777;
+}
+
+.btn-edit:hover {
+    background-color: #eee;
+    color: #000;
+}
+
+.btn-delete {
+    border-color: #444;
+    color: #bbb;
+}
+
+.btn-delete:hover {
+    background-color: #400;
+    border-color: #800;
+    color: #fff;
+}
+
+/* ====== BACK LINK ====== */
+.back-link {
+    display: inline-block;
+    margin-top: 40px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 2px;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ====== HEADER ====== -->
+     <header>
+        <div class="logo">BLACK NEEDLE RECORDS</div>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/cat">Каталог</a>
+            <a href="/about">О нас</a>
+            <a href="/posts">Статьи</a>
+            <a href="/create-article">Добавить статью</a>
+            <a href="/create-item">Добавить товар</a>
+        </nav>
+    </header>
+
+    <!-- ====== ARTICLE ====== -->
+    <article class="article">
+        <h1>{{ article.title }}</h1>
+
+        <div class="article-date">
+            {{ article.date.date() }}
+        </div>
+
+        <div class="article-text">
+            {{ article.text }}
+        </div>
+
+        <div class="article-actions">
+    <a href="/posts/{{ article.id }}/update" class="btn btn-edit">
+        Редактировать
+    </a>
+
+    <a href="/posts/{{ article.id }}/delete" class="btn btn-delete">
+        Удалить
+    </a>
+</div>
+
+<a href="/posts" class="back-link">← Назад к статьям</a>
+
+        
+    </article>
+
+</body>
+</html>

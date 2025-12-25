@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ item.title }} — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===== RESET ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            background-color: #000;
+            color: #eee;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.8;
+        }
+
+        a { color:#eee; text-decoration:none; }
+        a:hover { color:#aaa; }
+
+        /* ===== HEADER ===== */
+        header {
+            padding:25px 40px;
+            border-bottom:1px solid #222;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo { font-size:22px; font-weight:bold; letter-spacing:3px; }
+        nav a { margin-left:25px; font-size:13px; text-transform:uppercase; letter-spacing:1px; }
+
+        /* ===== ITEM ===== */
+        .item {
+            max-width:900px;
+            margin:70px auto;
+            padding:0 20px;
+        }
+
+        .item h1 {
+            font-size:28px;
+            margin-bottom:20px;
+            letter-spacing:2px;
+            text-transform:uppercase;
+        }
+
+        /* ===== SLIDER ===== */
+        .slider {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .slides {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* квадратный контейнер */
+            overflow: hidden;
+        }
+
+        .slides img {
+            position: absolute;
+            top:0; left:0;
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition: opacity 0.5s ease-in-out;
+            opacity:0;
+        }
+
+        .slides img.active {
+            opacity:1;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top:50%;
+            transform: translateY(-50%);
+            background: rgba(50,50,50,0.7);
+            border:none;
+            color:#fff;
+            font-size:24px;
+            padding:10px 15px;
+            cursor:pointer;
+            border-radius:50%;
+        }
+
+        .slider-btn:hover { background: rgba(100,100,100,0.8); }
+        .prev { left:10px; }
+        .next { right:10px; }
+
+        /* ===== PRICE & TEXT ===== */
+        .price { font-size:20px; margin-bottom:30px; color:#bbb; text-align:center; }
+        .item-text { font-size:16px; color:#ccc; white-space: pre-line; margin-bottom:50px; }
+
+        /* ===== ACTIONS ===== */
+        .item-actions {
+            display:flex;
+            gap:20px;
+            justify-content:center;
+            margin-bottom:40px;
+        }
+
+        .btn {
+            display:inline-block;
+            padding:10px 25px;
+            font-size:12px;
+            text-transform:uppercase;
+            letter-spacing:2px;
+            border:1px solid #555;
+            transition:0.3s;
+        }
+
+        .btn-edit:hover { border-color:#aaa; }
+        .btn-delete { border-color:#600; color:#f66; }
+        .btn-delete:hover { border-color:#f66; color:#fff; }
+
+        .back-link {
+            font-size:12px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            border-bottom:1px solid #555;
+            padding-bottom:2px;
+            display:block;
+            text-align:center;
+        }
+        .back-link:hover { border-color:#999; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BLACK NEEDLE RECORDS</div>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/cat">Каталог</a>
+        <a href="/about">О нас</a>
+        <a href="/posts">Статьи</a>
+        <a href="/create-article">Добавить статью</a>
+        <a href="/create-item">Добавить товар</a>
+    </nav>
+</header>
+
+<article class="item">
+    <h1>{{ item.title }}</h1>
+
+    <!-- ===== SLIDER ===== -->
+    <div class="slider">
+        <div class="slides">
+            {% if item.images %}
+                {% for img in item.images %}
+                    <img src="{{ url_for('static', filename='images/' + img.filename) }}" alt="{{ item.title }}" class="{% if loop.first %}active{% endif %}">
+                {% endfor %}
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="placeholder" class="active">
+            {% endif %}
+        </div>
+        <button class="slider-btn prev">&#10094;</button>
+        <button class="slider-btn next">&#10095;</button>
+    </div>
+
+    <div class="price">{{ item.price }} ₽</div>
+
+    <div class="item-text">{{ item.text }}</div>
+
+    <div class="item-actions">
+        <a href="/cat/{{ item.id }}/update" class="btn btn-edit">Редактировать</a>
+        <a href="/cat/{{ item.id }}/delete" class="btn btn-delete">Удалить</a>
+    </div>
+
+    <a href="/cat" class="back-link">← Назад в каталог</a>
+</article>
+
+<script>
+    const slides = document.querySelectorAll('.slides img');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let current = 0;
+
+    function showSlide(index) {
+        slides.forEach((img,i) => img.classList.remove('active'));
+        slides[index].classList.add('active');
+    }
+
+    prevBtn.addEventListener('click', () => {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+    });
+
+    setInterval(() => {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+    }, 5000);
+</script>
+
+</body>
+</html>

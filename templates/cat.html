@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===== RESET ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            background-color:#000;
+            color:#eee;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        a { text-decoration:none; color:#eee; }
+
+        /* ===== HEADER ===== */
+        header {
+            padding:25px 40px;
+            border-bottom:1px solid #222;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo { font-size:22px; letter-spacing:3px; font-weight:bold; }
+        nav a { margin-left:25px; font-size:13px; text-transform:uppercase; letter-spacing:1px; }
+        nav a:hover { color:#999; }
+
+        /* ===== CATALOG ===== */
+        .catalog {
+            max-width:1200px;
+            margin:60px auto;
+            padding:0 20px;
+        }
+
+        .catalog h1 {
+            margin-bottom:40px;
+            text-transform:uppercase;
+            letter-spacing:2px;
+            font-size:28px;
+        }
+
+        .items {
+            display:grid;
+            grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+            gap:30px;
+        }
+
+        .item {
+            background-color:#0a0a0a;
+            border:1px solid #222;
+            padding:15px;
+            transition:0.3s;
+        }
+
+        .item:hover { border-color:#666; transform:translateY(-5px); }
+
+        .item img {
+            width:100%;
+            aspect-ratio:1 / 1;
+            object-fit:cover;
+            background-color:#111;
+            margin-bottom:15px;
+        }
+
+        .item h2 {
+            font-size:15px;
+            margin-bottom:10px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+        }
+
+        .price {
+            font-size:14px;
+            color:#aaa;
+            margin-bottom:15px;
+        }
+
+        .details {
+            display:inline-block;
+            font-size:12px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            border-bottom:1px solid #555;
+            padding-bottom:2px;
+        }
+
+        .details:hover { border-color:#999; }
+
+        .empty { color:#666; font-size:14px; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BLACK NEEDLE RECORDS</div>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/cat">Каталог</a>
+        <a href="/about">О нас</a>
+        <a href="/posts">Статьи</a>
+        <a href="/create-article">Добавить статью</a>
+        <a href="/create-item">Добавить товар</a>
+    </nav>
+</header>
+
+<section class="catalog">
+    <h1>Каталог</h1>
+
+    {% if items %}
+    <div class="items">
+        {% for el in items %}
+        <div class="item">
+            <!-- Показываем первое изображение товара, если есть -->
+            {% if el.images %}
+                <img src="{{ url_for('static', filename='images/' + el.images[0].filename) }}" alt="{{ el.title }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="{{ el.title }}">
+            {% endif %}
+
+            <h2>{{ el.title }}</h2>
+            <div class="price">{{ el.price }} ₽</div>
+
+            <a href="/cat/{{ el.id }}" class="details">Детальнее</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="empty">Каталог пока пуст.</p>
+    {% endif %}
+</section>
+
+</body>
+</html>

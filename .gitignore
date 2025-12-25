@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Python виртуальная среда
+venv/
+env/
+
+# Папка с базой данных
+instance/
+
+# Кэш Python
+__pycache__/
+
+# Статика, временные файлы
+static/
+*.log

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить товар — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #eee;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a {
+            color: #eee;
+            text-decoration: none;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            padding: 25px 40px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        nav a {
+            margin-left: 25px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #999;
+        }
+
+        /* ===== FORM ===== */
+        .form-wrapper {
+            max-width: 600px;
+            margin: 70px auto;
+            padding: 40px;
+            background-color: #0a0a0a;
+            border: 1px solid #222;
+        }
+
+        .form-wrapper h1 {
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background-color: #000;
+            border: 1px solid #333;
+            color: #eee;
+            padding: 12px;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #777;
+        }
+
+        input[type="submit"] {
+            background-color: transparent;
+            border: 1px solid #555;
+            color: #eee;
+            padding: 12px 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            border-color: #999;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+ <header>
+        <div class="logo">BLACK NEEDLE RECORDS</div>
+        <nav>
+            <a href="/">Главная</a>
+            <a href="/cat">Каталог</a>
+            <a href="/about">О нас</a>
+            <a href="/posts">Статьи</a>
+            <a href="/create-article">Добавить статью</a>
+            <a href="/create-item">Добавить товар</a>
+        </nav>
+    </header>
+
+<section class="form-wrapper">
+    <h1>Добавить товар</h1>
+
+    <form method="post", enctype='multipart/form-data'>
+        <label for="title">Название</label>
+        <input type="text" name="title" id="title" required>
+
+        <label for="price">Цена (₽)</label>
+        <input type="text" name="price" id="price" inputmode="numeric" pattern="[0-9]+" required>
+
+        <label for="text">Описание</label>
+        <textarea name="text" id="text" required></textarea>
+
+        <label for='images'>Изображения</label>
+        <input type='file' name='images' id='images' multiple accept='image/*'>
+
+        <input type="submit" value="Добавить">
+    </form>
+</section>
+
+</body>
+</html>
