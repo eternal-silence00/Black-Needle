@@ -140,24 +140,23 @@
     <h1>Обновление товара</h1>
 
     <div class="form-wrapper">
-        <form method="post">
-            <label for="title">Название</label>
-            <input
-                type="text"
-                name="title"
-                id="title"
-                value="{{ item.title }}"
-                required
-            >
+        <form method="post" enctype="multipart/form-data">
 
-            <label for="price">Цена (₽)</label>
-        <input type="text" name="price" id="price" inputmode="numeric" pattern="[0-9]+" value="{{item.price}}" required>
+    <label>Название</label>
+    <input type="text" name="title" value="{{ item.title }}" required>
 
-            <label for="text">Описание</label>
-            <textarea name="text" id="text" required>{{ item.text }}</textarea>
+    <label>Цена</label>
+    <input type="text" name="price" value="{{ item.price }}" required>
 
-            <input type="submit" value="Обновить">
-        </form>
+    <label>Описание</label>
+    <textarea name="text" required>{{ item.text }}</textarea>
+
+    <label>Заменить изображения</label>
+    <input type="file" name="images" multiple accept="image/*">
+
+    <button type="submit">Сохранить</button>
+</form>
+
     </div>
 
 </body>

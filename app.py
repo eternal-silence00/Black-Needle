@@ -105,12 +105,6 @@ def post_delete(id):
     # Удаление статьи
     article = Article.query.get_or_404(id)  # достаем статью по ID или выдаём 404
     try:
-        
-         # Удаляем файлы изображений с диска
-        for img in item.images:
-            img_path = os.path.join(app.config['UPLOAD_FOLDER'], img.filename)
-            if os.path.exists(img_path):
-                os.remove(img_path)
                 
         db.session.delete(article)  # удаляем из базы
         db.session.commit()  # подтверждаем изменения
@@ -124,6 +118,14 @@ def item_delete(id):
     # Удаление товара
     item = Item.query.get_or_404(id)  # достаем товар по ID или выдаём 404
     try:
+        
+        # Удаляем файлы изображений с диска
+        for img in item.images:
+            img_path = os.path.join(app.config['UPLOAD_FOLDER'], img.filename)
+            if os.path.exists(img_path):
+                os.remove(img_path)
+        
+        
         db.session.delete(item)  # удаляем из базы
         db.session.commit()  # подтверждаем изменения
         return redirect("/cat")  # возвращаемся в список товаров 
@@ -157,14 +159,30 @@ def post_update(id):
 @app.route('/cat/<int:id>/update', methods=['POST','GET'])
 def item_update(id):
     # Редактирование товара
-    item = Item.query.get(id)  # достаем товар по ID
+    item = Item.query.get_or_404(id)  # достаем товар по ID
     if request.method == "POST":
         # Если форма отправлена методом POST — обновляем данные
         item.title = request.form["title"]
         item.price = request.form["price"]
         item.text = request.form["text"]
         
+        files = request.files.getlist('images')
+        
         try:
+            
+            if files and files[0].filename != "":
+                for img in item.images:
+                    img_path = os.path.join(app.config["UPLOAD_FOLDER"],img.filename)
+                    if os.path.exists(img_path):
+                        os.remove(img_path)
+                    db.session.delete(img)
+                for file in files:
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config["UPLOAD_FOLDER"],filename))
+                    new_img = ItemImage(item_id=item.id,filename=filename)
+                    db.session.add(new_img)
+                    
+                    
             db.session.commit()  # сохраняем изменения
             return redirect("/cat")
         except:
