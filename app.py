@@ -80,7 +80,16 @@ def posts():
 @app.route('/cat')
 def cat():
     # Страница каталога товаров
-    items = Item.query.order_by(Item.price).all()  # достаем все товары, сортируем по цене
+    
+    sort = request.args.get("sort")
+    
+    if sort == "price_asc":
+        items = Item.query.order_by(Item.price.asc()).all()
+    elif sort == "price_desc":
+        items = Item.query.order_by(Item.price.desc()).all()
+    else:
+        items = Item.query.all()
+    
     return render_template("cat.html", items=items)  # передаем товары в шаблон
 
 
