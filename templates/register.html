@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Стили такие же, как в login.html */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background-color:#000; color:#eee; font-family:Arial, sans-serif; }
+        .auth-container { max-width: 400px; margin: 100px auto; padding: 40px; border: 1px solid #222; background-color: #0a0a0a; text-align: center; }
+        h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+        .auth-form input { width: 100%; padding: 12px; margin-bottom: 20px; background-color: #000; border: 1px solid #333; color: #eee; outline: none; }
+        .auth-form input:focus { border-color: #999; }
+        .btn-submit { width: 100%; padding: 12px; background: none; border: 1px solid #eee; color: #eee; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { background-color: #eee; color: #000; }
+        .auth-footer { margin-top: 25px; font-size: 13px; color: #666; }
+        .auth-footer a { color: #aaa; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Регистрация</h1>
+        <form class="auth-form" method="POST">
+            <input type="text" name="username" placeholder="Придумайте логин" required>
+            <input type="password" name="password" placeholder="Придумайте пароль" required>
+            <button type="submit" class="btn-submit">Создать аккаунт</button>
+        </form>
+        <div class="auth-footer">
+            Уже есть аккаунт? <a href="/login">Войти</a>
+        </div>
+    </div>
+</body>
+</html>

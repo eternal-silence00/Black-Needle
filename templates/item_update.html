@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Редактирование статьи — BLACK NEEDLE RECORDS</title>
+    <title>Редактирование товара — BLACK NEEDLE RECORDS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -154,6 +154,16 @@ nav a:hover {
 
     <label>Описание</label>
     <textarea name="text" required>{{ item.text }}</textarea>
+
+    <label for="artist">Артист</label>
+        <input type="text" name="artist" value="{{ item.artist }}" required>
+
+        <label for="genre">:Жанр</label>
+        <input type="text" name="genre" value="{{ item.genre }}" required>
+
+        <label for="release_year">Год выпуска</label>
+        <input type="number" name="release_year" value="{{ item.release_year }}" required>
+
 
     <label>Заменить изображения</label>
     <input type="file" name="images" multiple accept="image/*">

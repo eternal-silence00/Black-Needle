@@ -152,8 +152,22 @@ nav a:hover {
         <a href="/cat">Каталог</a>
         <a href="/about">О нас</a>
         <a href="/posts">Статьи</a>
-        <a href="/create-article">Добавить статью</a>
-        <a href="/create-item">Добавить товар</a>
+
+        {# Проверяем: если пользователь админ, показываем ссылки на добавление #}
+        {% if current_user.is_authenticated and current_user.is_admin %}
+            <a href="/create-article">Добавить статью</a>
+            <a href="/create-item">Добавить товар</a>
+        {% endif %}
+
+        {# Блок авторизации #}
+        {% if current_user.is_authenticated %}
+            <span style="margin-left: 25px; font-size: 12px; color: #666; text-transform: uppercase;">
+                {{ current_user.username }}
+            </span>
+            <a href="/logout" style="color: #f44336;">Выйти</a>
+        {% else %}
+            <a href="/login" style="border: 1px solid #444; padding: 5px 10px;">Войти</a>
+        {% endif %}
     </nav>
 </header>
 
@@ -179,11 +193,15 @@ nav a:hover {
 
     <div class="item-text">{{ item.text }}</div>
 
+    <div class="item-artist">Исполнитель: {{ item.artist }}</div>
+    <div class="item-genre">Жанр: {{ item.genre }}</div>
+    <div class="item-release_year">Год выпуска: {{ item.release_year }}</div>
+    {% if current_user.is_authenticated and current_user.is_admin %}
     <div class="item-actions">
         <a href="/cat/{{ item.id }}/update" class="btn btn-edit">Редактировать</a>
         <a href="/cat/{{ item.id }}/delete" class="btn btn-delete">Удалить</a>
     </div>
-
+    {% endif %}
     <a href="/cat" class="back-link">← Назад в каталог</a>
 </article>
 

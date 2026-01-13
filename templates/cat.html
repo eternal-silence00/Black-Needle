@@ -57,6 +57,125 @@ nav a:hover {
             font-size:28px;
         }
 
+   .sort-bar {
+
+    top: 80px;
+    background-color: #111;
+    padding: 10px 20px;
+    border: 1px solid #222;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    align-items: center;
+
+    z-index: 10;
+}
+
+.sort-bar strong {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+
+.sort-bar a {
+    color: #eee;
+    text-decoration: none;
+    padding: 5px 8px;
+    border-bottom: 1px solid transparent;
+    transition: 0.3s;
+    font-size: 13px;
+}
+
+.sort-bar a:hover,
+.sort-bar a.active {
+    border-color: #999;
+    color: #fff;
+}
+
+.sort-bar form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.sort-bar input[type="number"] {
+    background-color: #000;
+    border: 1px solid #333;
+    color: #eee;
+    padding: 6px 8px;
+    width: 90px;
+    font-size: 13px;
+    outline: none;
+}
+
+.sort-bar input[type="number"]::placeholder {
+    color: #666;
+}
+
+.sort-bar input[type="number"]:focus {
+    border-color: #999;
+}
+
+.sort-bar button {
+    background: none;
+    border: 1px solid #555;
+    color: #eee;
+    padding: 6px 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sort-bar button:hover {
+    background-color: #eee;
+    color: #000;
+}
+
+/* ===== FILTER DROPDOWNS ===== */
+
+details {
+    position: relative;
+    background-color: #000;
+    border: 1px solid #333;
+    padding: 6px 10px;
+    min-width: 160px;
+}
+
+details summary {
+    cursor: pointer;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    list-style: none;
+}
+
+details {
+    position: relative;
+    background-color: #000;
+    border: 1px solid #333;
+    padding: 6px 10px;
+    min-width: 160px;
+}
+
+/* Список внутри details будет выпадать вниз */
+details[open] > *:not(summary) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #111;
+    border: 1px solid #333;
+    padding: 10px;
+    z-index: 100;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+
         .items {
             display:grid;
             grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
@@ -105,6 +224,38 @@ nav a:hover {
         .details:hover { border-color:#999; }
 
         .empty { color:#666; font-size:14px; }
+
+        .pagination {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.pagination a, .pagination span {
+    padding: 8px 14px;
+    border: 1px solid #222;
+    font-size: 13px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.pagination a:hover {
+    border-color: #666;
+    background-color: #111;
+}
+
+.pagination a.active {
+    border-color: #eee;
+    background-color: #eee;
+    color: #000;
+}
+
+.pagination .ellipsis {
+    border: none;
+    color: #444;
+}
     </style>
 </head>
 
@@ -117,18 +268,128 @@ nav a:hover {
         <a href="/cat">Каталог</a>
         <a href="/about">О нас</a>
         <a href="/posts">Статьи</a>
-        <a href="/create-article">Добавить статью</a>
-        <a href="/create-item">Добавить товар</a>
+
+        {# Проверяем: если пользователь админ, показываем ссылки на добавление #}
+        {% if current_user.is_authenticated and current_user.is_admin %}
+            <a href="/create-article">Добавить статью</a>
+            <a href="/create-item">Добавить товар</a>
+        {% endif %}
+
+        {# Блок авторизации #}
+        {% if current_user.is_authenticated %}
+            <span style="margin-left: 25px; font-size: 12px; color: #666; text-transform: uppercase;">
+                {{ current_user.username }}
+            </span>
+            <a href="/logout" style="color: #f44336;">Выйти</a>
+        {% else %}
+            <a href="/login" style="border: 1px solid #444; padding: 5px 10px;">Войти</a>
+        {% endif %}
     </nav>
 </header>
 
 <section class="catalog">
     <h1>Каталог</h1>
 
-    <div style="margin-bottom: 20px;">
-    <a href="/cat?sort=price_asc">Цена ↑</a> |
-    <a href="/cat?sort=price_desc">Цена ↓</a>
+<div class="sort-bar">
+
+<form method="get" style="display:flex; flex-wrap:wrap; gap:12px 20px; align-items:center;">
+
+    <!-- ===== СОРТИРОВКА ===== -->
+    <strong>Сортировка:</strong>
+
+    <label>
+        <input type="radio" name="sort" value="new" {% if sort=='new' %}checked{% endif %}>
+        Новинки
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="old" {% if sort=='old' %}checked{% endif %}>
+        Старые
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="popular" {% if sort=='popular' %}checked{% endif %}>
+        Популярные
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="price_asc" {% if sort=='price_asc' %}checked{% endif %}>
+        Цена ↑
+    </label>
+
+    <label>
+        <input type="radio" name="sort" value="price_desc" {% if sort=='price_desc' %}checked{% endif %}>
+        Цена ↓
+    </label>
+
+    <!-- ===== АКТИВНОСТЬ ===== -->
+    <strong>Фильтр:</strong>
+
+    <label>
+        <input type="checkbox" name="active" value="1" {% if filter_active=='1' %}checked{% endif %}>
+        Только активные
+    </label>
+
+    <!-- ===== ЦЕНА ===== -->
+    <strong>Цена:</strong>
+
+    <input type="number" name="min_price" placeholder="от"
+           value="{{ request.args.get('min_price','') }}" style="width:80px;">
+
+    <input type="number" name="max_price" placeholder="до"
+           value="{{ request.args.get('max_price','') }}" style="width:80px;">
+
+    <!-- ===== ВЫПАДАЮЩИЕ МЕНЮ ===== -->
+    <details>
+    <summary>Артист</summary>
+    <div class="dropdown-content">
+        {% for artist in artists %}
+            <label>
+                <input type="checkbox" name="artist" value="{{ artist }}"
+                       {% if artist in artists_selected %}checked{% endif %}>
+                {{ artist }}
+            </label><br>
+        {% endfor %}
+    </div>
+</details>
+
+<details>
+    <summary>Жанр</summary>
+    <div class="dropdown-content">
+        {% for genre in genres %}
+            <label>
+                <input type="checkbox" name="genre" value="{{ genre }}"
+                       {% if genre in genres_selected %}checked{% endif %}>
+                {{ genre }}
+            </label><br>
+        {% endfor %}
+    </div>
+</details>
+
+<details>
+    <summary>Год</summary>
+    <div class="dropdown-content">
+        {% for year in years %}
+            <label>
+                <input type="checkbox" name="year" value="{{ year }}"
+                       {% if year|string in years_selected %}checked{% endif %}>
+                {{ year }}
+            </label><br>
+        {% endfor %}
+    </div>
+</details>
+
+    <!-- ===== КНОПКА ===== -->
+    <button type="submit">Применить</button>
+    <a href="/cat" class="reset-btn">Сбросить всё</a>
+
+</form>
 </div>
+
+
+
+
+
 
 
     {% if items %}
@@ -137,9 +398,13 @@ nav a:hover {
         <div class="item">
             <!-- Показываем первое изображение товара, если есть -->
             {% if el.images %}
+            <a href="/cat/{{ el.id }}">
                 <img src="{{ url_for('static', filename='images/' + el.images[0].filename) }}" alt="{{ el.title }}">
+            </a>
             {% else %}
+            <a href="/cat/{{ el.id }}">
                 <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="{{ el.title }}">
+            </a>    
             {% endif %}
 
             <h2>{{ el.title }}</h2>
@@ -153,6 +418,30 @@ nav a:hover {
         <p class="empty">Каталог пока пуст.</p>
     {% endif %}
 </section>
+
+<div class="pagination">
+    {# Кнопка "Назад" #}
+    {% if pagination.has_prev %}
+       <a href="{{ url_for('cat', page=pagination.prev_num, **dict(request.args.items() | rejectattr('0', 'equalto', 'page'))) }}">« Назад</a>
+    {% endif %}
+
+    {# Номера страниц #}
+    {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+        {% if page_num %}
+            <a href="{{ url_for('cat', page=page_num, **dict(request.args.items() | rejectattr('0', 'equalto', 'page'))) }}" 
+   class="{{ 'active' if page_num == pagination.page else '' }}">
+                {{ page_num }}
+            </a>
+        {% else %}
+            <span class="ellipsis">...</span>
+        {% endif %}
+    {% endfor %}
+
+    {# Кнопка "Вперед" #}
+    {% if pagination.has_next %}
+       <a href="{{ url_for('cat', page=pagination.next_num, **dict(request.args.items() | rejectattr('0', 'equalto', 'page'))) }}">Вперед »</a>
+    {% endif %}
+</div>
 
 </body>
 </html>

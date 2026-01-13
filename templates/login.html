@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход — BLACK NEEDLE RECORDS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Используем твои базовые стили */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { background-color:#000; color:#eee; font-family:Arial, sans-serif; }
+        
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            border: 1px solid #222;
+            background-color: #0a0a0a;
+            text-align: center;
+        }
+
+        h1 { font-size: 24px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+
+        .auth-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #000;
+            border: 1px solid #333;
+            color: #eee;
+            outline: none;
+        }
+
+        .auth-form input:focus { border-color: #999; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: none;
+            border: 1px solid #eee;
+            color: #eee;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover { background-color: #eee; color: #000; }
+
+        .auth-footer { margin-top: 25px; font-size: 13px; color: #666; }
+        .auth-footer a { color: #aaa; text-decoration: underline; }
+        .auth-footer a:hover { color: #eee; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Вход</h1>
+        <form class="auth-form" method="POST">
+            <input type="text" name="username" placeholder="Логин" required>
+            <input type="password" name="password" placeholder="Пароль" required>
+            <button type="submit" class="btn-submit">Войти</button>
+        </form>
+        <div class="auth-footer">
+            Нет аккаунта? <a href="/register">Зарегистрироваться</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,32 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        /* ====== ОБЩИЕ СТИЛИ ====== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      /* ===== RESET & BASE ===== */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #000;
-            color: #eee;
-            line-height: 1.6;
-        }
+body {
+    background-color: #000;
+    color: #eee;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
 
-        a {
-            color: #eee;
-            text-decoration: none;
-        }
+a { 
+    text-decoration: none; 
+    color: #eee; 
+}
 
-        h1, h2, h3 {
-            font-weight: 700;
-            letter-spacing: 2px;
-        }
-
-    
-       /* ====== ШАПКА ====== */
+/* ====== ШАПКА (HEADER) ====== */
 header {
     background-color: #000;
     border-bottom: 1px solid #222;
@@ -44,6 +38,7 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
+    letter-spacing: 2px;
 }
 
 nav a {
@@ -56,114 +51,179 @@ nav a:hover {
     color: #999;
 }
 
-        /* ====== HERO ====== */
-        .hero {
-            height: 70vh;
-            background: 
-                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
-                url("https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/303663114/original/0412a4ad8b4d56db60fb6a5ddce32b993d2a994a/design-extreme-thrash-metal-and-heavy-metal-band-logo.png") center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            padding: 0 60px;
-        }
+/* ====== HERO СЕКЦИЯ (ТОЛЬКО ДЛЯ ГЛАВНОЙ) ====== */
+.hero {
+    height: 90vh;
+    background: 
+        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+        url("https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/303663114/original/0412a4ad8b4d56db60fb6a5ddce32b993d2a994a/design-extreme-thrash-metal-and-heavy-metal-band-logo.png") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    border-bottom: 1px solid #222;
+}
 
-        .hero-text {
-            max-width: 600px;
-        }
+.hero-text {
+    max-width: 550px;
+}
 
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
+.hero-text h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
 
-        .hero-text p {
-            font-size: 18px;
-            color: #bbb;
-        }
+.hero-text p {
+    font-size: 18px;
+    color: #bbb;
+}
 
-        .hero-text button {
-            margin-top: 30px;
-            padding: 15px 30px;
-            background: none;
-            border: 1px solid #eee;
-            color: #eee;
-            cursor: pointer;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
+.hero-text button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    background: none;
+    border: 1px solid #eee;
+    color: #eee;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
 
-        .hero-text button:hover {
-            background-color: #eee;
-            color: #000;
-        }
+.hero-text button:hover {
+    background-color: #eee;
+    color: #000;
+}
 
-        /* ====== СЕКЦИЯ ТОВАРОВ ====== */
-        .section {
-            padding: 60px 40px;
-        }
+/* ===== СЕТКА ТОВАРОВ (КАТАЛОГ И ПОПУЛЯРНОЕ) ===== */
+.catalog {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
 
-        .section h2 {
-            margin-bottom: 40px;
-            text-align: center;
-        }
+.catalog h1 {
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 28px;
+    text-align: left;
+}
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
+.items {
+    display: grid;
+    /* auto-fill гарантирует, что карточки не будут растягиваться на весь экран, если их мало */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+}
 
-        .product {
-            background-color: #111;
-            border: 1px solid #222;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .product img {
-    width: 100%;
-    aspect-ratio: 1 / 1;   /* квадрат */
-    object-fit: cover;    /* кадрирование как у обложек */
-    filter: grayscale(100%);
+.item {
+    background-color: #0a0a0a;
     border: 1px solid #222;
-        }
+    padding: 15px;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+}
 
-        
+.item:hover { 
+    border-color: #666; 
+    transform: translateY(-5px); 
+}
 
-        .product h3 {
-            margin: 15px 0 5px;
-            font-size: 16px;
-        }
+.item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: #111;
+    margin-bottom: 15px;
+    filter: grayscale(100%); /* Твой стиль с ч/б */
+    transition: 0.5s;
+}
 
-        .product p {
-            font-size: 14px;
-            color: #aaa;
-        }
+.item:hover img {
+    filter: grayscale(0%); /* Цвет при наведении */
+}
 
-        /* ====== ФУТЕР ====== */
-        footer {
-            border-top: 1px solid #222;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #666;
-        }
+.item h2 {
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-height: 40px; /* Чтобы названия были в одну линию */
+}
+
+.price {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.details {
+    display: inline-block;
+    align-self: flex-start;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 2px;
+    transition: 0.3s;
+}
+
+.details:hover { 
+    border-color: #999; 
+    color: #fff;
+}
+
+/* ===== ВСПОМОГАТЕЛЬНОЕ ===== */
+.empty { 
+    color: #666; 
+    font-size: 14px; 
+    text-align: center;
+    width: 100%;
+}
+
+footer {
+    border-top: 1px solid #222;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 60px;
+}
     </style>
 </head>
 <body>
 
     <!-- ====== HEADER ====== -->
     <header>
-        <div class="logo">BLACK NEEDLE RECORDS</div>
-        <nav>
-            <a href="/">Главная</a>
-            <a href="/cat">Каталог</a>
-            <a href="/about">О нас</a>
-            <a href="/posts">Статьи</a>
+    <div class="logo">BLACK NEEDLE RECORDS</div>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/cat">Каталог</a>
+        <a href="/about">О нас</a>
+        <a href="/posts">Статьи</a>
+
+        {# Проверяем: если пользователь админ, показываем ссылки на добавление #}
+        {% if current_user.is_authenticated and current_user.is_admin %}
             <a href="/create-article">Добавить статью</a>
             <a href="/create-item">Добавить товар</a>
-        </nav>
-    </header>
+        {% endif %}
+
+        {# Блок авторизации #}
+        {% if current_user.is_authenticated %}
+            <span style="margin-left: 25px; font-size: 12px; color: #666; text-transform: uppercase;">
+                {{ current_user.username }}
+            </span>
+            <a href="/logout" style="color: #f44336;">Выйти</a>
+        {% else %}
+            <a href="/login" style="border: 1px solid #444; padding: 5px 10px;">Войти</a>
+        {% endif %}
+    </nav>
+</header>
     <!-- ====== HERO ====== -->
     <section class="hero">
         <div class="hero-text">
@@ -178,30 +238,35 @@ nav a:hover {
     </section>
 
     <!-- ====== PRODUCTS ====== -->
-    <section class="section">
-        <h2>Популярные релизы</h2>
+   <section class="catalog">
+    <h1>Популярное</h1>
+    
+    {% if popular_items %}
+    <div class="items">
+        {% for el in popular_items %}
+        <div class="item">
+            <a href="/cat/{{ el.id }}">
+                {% if el.images %}
+                    <img src="{{ url_for('static', filename='images/' + el.images[0].filename) }}" alt="{{ el.title }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="{{ el.title }}">
+                {% endif %}
+            </a>
 
-        <div class="products">
-            <div class="product">
-                <img src="https://cdn-image.zvuk.com/pic?hash=bb9fbacb-27e3-4d22-a984-0fb5c5742345&id=8877663&size=large&type=release" alt="Metal vinyl">
-                <h3>Dark Throne</h3>
-                <p>Black Metal • LP</p>
-            </div>
+            <h2>{{ el.title }}</h2>
+            
+            
+            
+            <div class="price">{{ el.price }} ₽</div>
 
-            <div class="product">
-                <img src="https://www.large.nl/dw/image/v2/BBQV_PRD/on/demandware.static/-/Sites-master-emp/default/dw7047a616/images/5/8/7/8/587816.jpg?sfrm=png" alt="Vinyl record">
-                <h3>Slaughter To Prevail</h3>
-                <p>DeathCore • LP</p>
-            </div>
-
-            <div class="product">
-                <img src="https://media.pitchfork.com/photos/686eb530981e85ccdff725d0/master/w_1280%2Cc_limit/Deftones.jpg" alt="Vinyl player">
-                <h3>Deftones</h3>
-                <p>alternative • LP</p>
-            </div>
+            <a href="/cat/{{ el.id }}" class="details">Детальнее</a>
         </div>
-    </section>
-
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="empty">Пока нет популярных товаров.</p>
+    {% endif %}
+</section>
     <!-- ====== FOOTER ====== -->
     <footer>
         © 2025 BLACK NEEDLE RECORDS — underground vinyl store

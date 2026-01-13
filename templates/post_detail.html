@@ -154,16 +154,30 @@ nav a:hover {
 
     <!-- ====== HEADER ====== -->
      <header>
-        <div class="logo">BLACK NEEDLE RECORDS</div>
-        <nav>
-            <a href="/">Главная</a>
-            <a href="/cat">Каталог</a>
-            <a href="/about">О нас</a>
-            <a href="/posts">Статьи</a>
+    <div class="logo">BLACK NEEDLE RECORDS</div>
+    <nav>
+        <a href="/">Главная</a>
+        <a href="/cat">Каталог</a>
+        <a href="/about">О нас</a>
+        <a href="/posts">Статьи</a>
+
+        {# Проверяем: если пользователь админ, показываем ссылки на добавление #}
+        {% if current_user.is_authenticated and current_user.is_admin %}
             <a href="/create-article">Добавить статью</a>
             <a href="/create-item">Добавить товар</a>
-        </nav>
-    </header>
+        {% endif %}
+
+        {# Блок авторизации #}
+        {% if current_user.is_authenticated %}
+            <span style="margin-left: 25px; font-size: 12px; color: #666; text-transform: uppercase;">
+                {{ current_user.username }}
+            </span>
+            <a href="/logout" style="color: #f44336;">Выйти</a>
+        {% else %}
+            <a href="/login" style="border: 1px solid #444; padding: 5px 10px;">Войти</a>
+        {% endif %}
+    </nav>
+</header>
 
     <!-- ====== ARTICLE ====== -->
     <article class="article">
@@ -176,7 +190,7 @@ nav a:hover {
         <div class="article-text">
             {{ article.text }}
         </div>
-
+        {% if current_user.is_authenticated and current_user.is_admin %}
         <div class="article-actions">
     <a href="/posts/{{ article.id }}/update" class="btn btn-edit">
         Редактировать
@@ -186,7 +200,7 @@ nav a:hover {
         Удалить
     </a>
 </div>
-
+{% endif %}
 <a href="/posts" class="back-link">← Назад к статьям</a>
 
         
